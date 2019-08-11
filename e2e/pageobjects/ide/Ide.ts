@@ -11,7 +11,7 @@ import { DriverHelper } from '../../utils/DriverHelper';
 import { injectable, inject } from 'inversify';
 import { CLASSES } from '../../inversify.types';
 import { TestConstants } from '../../TestConstants';
-import { By, WebElement, error, until } from 'selenium-webdriver';
+import { By, WebElement, error } from 'selenium-webdriver';
 import { TestWorkspaceUtil, WorkspaceStatus } from '../../utils/workspace/TestWorkspaceUtil';
 
 export enum RightToolbarButton {
@@ -22,7 +22,7 @@ export enum RightToolbarButton {
 
 @injectable()
 export class Ide {
-    public static readonly EXPLORER_BUTTON_XPATH: string = '(//ul[@class=\'p-TabBar-content\']//li[@title=\'Explorer\'])[1]';
+    public static readonly EXPLORER_BUTTON_ID: string = 'shell-tab-files';
     public static readonly SELECTED_EXPLORER_BUTTON_XPATH: string = '(//ul[@class=\'p-TabBar-content\']//li[@title=\'Explorer\' and contains(@class, \'p-mod-current\')])[1]';
     public static readonly ACTIVATED_IDE_IFRAME_CSS: string = '#ide-iframe-window[aria-hidden=\'false\']';
     public static readonly SELECTED_GIT_BUTTON_XPATH: string = '(//ul[@class=\'p-TabBar-content\']//li[@title=\'Git\' and contains(@class, \'p-mod-current\')])[1]';
@@ -108,7 +108,7 @@ export class Ide {
     }
 
     async waitIde(timeout: number = TestConstants.TS_SELENIUM_LOAD_PAGE_TIMEOUT) {
-        const mainIdeParts: Array<By> = [By.css(Ide.TOP_MENU_PANEL_CSS), By.css(Ide.LEFT_CONTENT_PANEL_CSS), By.xpath(Ide.EXPLORER_BUTTON_XPATH)];
+        const mainIdeParts: Array<By> = [By.css(Ide.TOP_MENU_PANEL_CSS), By.css(Ide.LEFT_CONTENT_PANEL_CSS), By.id(Ide.EXPLORER_BUTTON_ID)];
 
         for (const idePartLocator of mainIdeParts) {
             await this.driverHelper.waitVisibility(idePartLocator, timeout);
