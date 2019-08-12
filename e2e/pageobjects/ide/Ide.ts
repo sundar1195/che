@@ -22,7 +22,7 @@ export enum RightToolbarButton {
 
 @injectable()
 export class Ide {
-    public static readonly EXPLORER_BUTTON_ID: string = 'shell-tab-files';
+    public static readonly EXPLORER_BUTTON_ID: string = 'shell-tab-explorer-view-container';
     public static readonly SELECTED_EXPLORER_BUTTON_XPATH: string = '(//ul[@class=\'p-TabBar-content\']//li[@title=\'Explorer\' and contains(@class, \'p-mod-current\')])[1]';
     public static readonly ACTIVATED_IDE_IFRAME_CSS: string = '#ide-iframe-window[aria-hidden=\'false\']';
     public static readonly SELECTED_GIT_BUTTON_XPATH: string = '(//ul[@class=\'p-TabBar-content\']//li[@title=\'Git\' and contains(@class, \'p-mod-current\')])[1]';
