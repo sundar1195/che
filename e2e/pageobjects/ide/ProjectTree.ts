@@ -26,7 +26,7 @@ export class ProjectTree {
         @inject(CLASSES.Editor) private readonly editor: Editor) { }
 
     async openProjectTreeContainer(timeout: number = TestConstants.TS_SELENIUM_DEFAULT_TIMEOUT) {
-        const selectedExplorerButtonLocator: By = By.xpath(Ide.SELECTED_EXPLORER_BUTTON_XPATH);
+        const selectedExplorerButtonLocator: By = By.css(Ide.SELECTED_EXPLORER_BUTTON_XPATH);
 
         await this.ide.waitRightToolbarButton(RightToolbarButton.Explorer, timeout);
 
