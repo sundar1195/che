@@ -243,4 +243,8 @@ export class Ide {
         return `//div[@class='theia-Notification' and contains(@id,'${notificationText}')]`;
     }
 
+    async sleep(timeout: number) {
+        await this.driverHelper.wait(timeout);
+    }
+
 }

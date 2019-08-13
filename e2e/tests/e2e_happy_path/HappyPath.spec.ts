@@ -179,16 +179,15 @@ suite('Display source code changes in the running application', async () => {
     test('Run application with changes', async () => {
 
         await runTask('che: run-with-changes');
-
+        await ide.sleep(60000);
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
-        // temporary solution for waiting routest for application
-        await setTimeout(() => {console.log('>>>>>>>>>>>>>>>>>>>in sleep block'); }, 3600000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
 
 
     });
 
     test('Check changes are displayed', async () => {
+        await ide.sleep(60000);
         await previewWidget.waitContentAvailable(SpringAppLocators.springTitleLocator, 60000, 10000);
         await previewWidget.waitAndSwitchToWidgetFrame();
         await previewWidget.waitAndClick(SpringAppLocators.springMenuButtonLocator);
