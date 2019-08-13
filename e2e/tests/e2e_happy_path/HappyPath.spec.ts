@@ -177,16 +177,15 @@ suite('Display source code changes in the running application', async () => {
     });
 
     test('Run application with changes', async () => {
-        await setTimeout(()=>{},30000)
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
         await runTask('che: run-with-changes');
 
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
-        //temporary solution for waiting routest for application
-        await setTimeout(()=>{},30000)
+        // temporary solution for waiting routest for application
+        await setTimeout(() => {console.log('>>>>>>>>>>>>>>>>>>>in sleep block'); }, 30000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
-        
-        
+
+
     });
 
     test('Check changes are displayed', async () => {
