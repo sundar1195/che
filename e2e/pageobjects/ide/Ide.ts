@@ -39,6 +39,10 @@ export class Ide {
         await this.driverHelper.waitAndSwitchToFrame(By.css(Ide.IDE_IFRAME_CSS), timeout);
     }
 
+    async sleep(timeout: number) {
+        await this.driverHelper.wait(timeout);
+    }
+
     async waitNotification(notificationText: string, timeout: number = TestConstants.TS_SELENIUM_DEFAULT_TIMEOUT) {
         const notificationLocator: By = By.xpath(this.getNotificationXpathLocator(notificationText));
 
@@ -243,8 +247,6 @@ export class Ide {
         return `//div[@class='theia-Notification' and contains(@id,'${notificationText}')]`;
     }
 
-    async sleep(timeout: number) {
-        await this.driverHelper.wait(timeout);
-    }
+
 
 }
