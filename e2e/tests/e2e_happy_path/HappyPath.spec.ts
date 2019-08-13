@@ -182,8 +182,9 @@ suite('Display source code changes in the running application', async () => {
 
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
+        
         //temporary solution for waiting routest for application
-        driverHelper.getDriver().sleep(20000);
+        await driverHelper.getDriver().sleep(20000);
     });
 
     test('Check changes are displayed', async () => {
