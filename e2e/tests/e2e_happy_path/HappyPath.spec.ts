@@ -126,7 +126,6 @@ suite('Language server validation', async () => {
 suite('Validation of workspace build and run', async () => {
     test('Build application', async () => {
         await runTask('che: build-file-output');
-
         await projectTree.expandPathAndOpenFile(projectName, 'build-output.txt');
         await editor.followAndWaitForText('build-output.txt', '[INFO] BUILD SUCCESS', 180000, 5000);
     });
@@ -181,10 +180,11 @@ suite('Display source code changes in the running application', async () => {
         await runTask('che: run-with-changes');
 
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
+        //temporary solution for waiting routest for application
+        await driverHelper.getDriver().sleep(30000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
         
-        //temporary solution for waiting routest for application
-        await driverHelper.getDriver().sleep(20000);
+        
     });
 
     test('Check changes are displayed', async () => {
