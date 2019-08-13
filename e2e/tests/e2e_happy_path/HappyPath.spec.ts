@@ -182,7 +182,7 @@ suite('Display source code changes in the running application', async () => {
 
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
         // temporary solution for waiting routest for application
-        await setTimeout(() => {console.log('>>>>>>>>>>>>>>>>>>>in sleep block'); }, 30000);
+        await setTimeout(() => {console.log('>>>>>>>>>>>>>>>>>>>in sleep block'); }, 3600000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
 
 
