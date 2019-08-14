@@ -87,7 +87,7 @@ export const TestConstants = {
     /**
      * Name of workspace created for 'Happy Path' scenario validation.
      */
-    TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME: process.env.TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME || 'wksp-b865',
+    TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME: process.env.TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME || 'petclinic-dev-environment',
 
     /**
      * Name of namespace created for 'Install Che' on OCP by OperatorHub UI.
