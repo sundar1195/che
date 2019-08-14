@@ -230,9 +230,10 @@ suite('Validation of debug functionality', async () => {
     });
 
     test('Open debug configuration file', async () => {
-        await topMenu.selectOption('Debug', 'Open Configurations');
-        await topMenu.selectOption('Debug', 'Open Configurations');
-        await topMenu.selectOption('Debug', 'Open Configurations');
+        try{await topMenu.selectOption('Debug', 'Open Configurations');}
+        catch(e){
+         await topMenu.selectOption('Debug', 'Open Configurations');
+        }
         await editor.waitEditorAvailable('launch.json');
         await editor.selectTab('launch.json');
     });
@@ -243,7 +244,6 @@ suite('Validation of debug functionality', async () => {
         await editor.clickOnSuggestion('Java: Launch Program in Current File');
         await editor.waitTabWithUnsavedStatus('launch.json');
         await editor.waitText('launch.json', '\"name\": \"Debug (Launch) - Current File\"');
-
         await editor.waitTabWithSavedStatus('launch.json');
     });
 
