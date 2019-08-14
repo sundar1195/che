@@ -73,8 +73,8 @@ suite('Validation of workspace start', async () => {
     });
 
     test('Wait until project is imported', async () => {
-        await topMenu.selectOption('File', 'Open Workspace...');
-        openWorkspaceWidget.selectItemInTreeAndOpenWorkspace('projects', 'console-java-simple');
+        //await topMenu.selectOption('File', 'Open Workspace...');
+        //openWorkspaceWidget.selectItemInTreeAndOpenWorkspace('projects', 'console-java-simple');
         await driverHelper.getDriver().getAllWindowHandles()
         await projectTree.openProjectTreeContainer();
         await projectTree.waitProjectImported(projectName, 'src');
