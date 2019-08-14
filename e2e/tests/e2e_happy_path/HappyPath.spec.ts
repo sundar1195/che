@@ -231,6 +231,9 @@ suite('Validation of debug functionality', async () => {
 
     test('Open debug configuration file', async () => {
         await topMenu.selectOption('Debug', 'Open Configurations');
+        driverHelper.getDriver().navigate().refresh();
+        await ide.sleep(10000);
+        await topMenu.selectOption('Debug', 'Open Configurations');
         await editor.waitEditorAvailable('launch.json');
         await editor.selectTab('launch.json');
     });
