@@ -23,6 +23,8 @@ import { By, Key, error } from 'selenium-webdriver';
 import { Terminal } from '../../pageobjects/ide/Terminal';
 import { DebugView } from '../../pageobjects/ide/DebugView';
 import { WarningDialog } from '../../pageobjects/ide/WarningDialog';
+import { OpenWorkspaceWidget } from '../../pageobjects/ide/OpenWorkspaceWidget';
+
 import * as fs from 'fs';
 
 const driverHelper: DriverHelper = e2eContainer.get(CLASSES.DriverHelper);
@@ -36,7 +38,7 @@ const rightToolbar: RightToolbar = e2eContainer.get(CLASSES.RightToolbar);
 const terminal: Terminal = e2eContainer.get(CLASSES.Terminal);
 const debugView: DebugView = e2eContainer.get(CLASSES.DebugView);
 const warningDialog: WarningDialog = e2eContainer.get(CLASSES.WarningDialog);
-
+const openWorkspaceWidget: OpenWorkspaceWidget = e2eContainer.get(CLASSES.OpenWorkspaceWidget);
 const projectName: string = 'petclinic';
 const namespace: string = TestConstants.TS_SELENIUM_USERNAME;
 const workspaceName: string = TestConstants.TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME;
@@ -67,9 +69,16 @@ suite('Validation of workspace start', async () => {
 
     test('Wait workspace running state', async () => {
         await ide.waitWorkspaceAndIde(namespace, workspaceName);
+        await ide.closeAllNotifications();
     });
 
     test('Wait until project is imported', async () => {
+        await topMenu.selectOption('File', 'Open Workspace...');
+        openWorkspaceWidget.selectItemInTreeAndOpenWorkspace('projects', 'console-java-simple');
+        const currentHandle: string  = await driverHelper.getDriver().getWindowHandle();
+        const handles: string [] = await driverHelper.getDriver().getAllWindowHandles();
+        
+        await driverHelper.getDriver().getAllWindowHandles()
         await projectTree.openProjectTreeContainer();
         await projectTree.waitProjectImported(projectName, 'src');
         await projectTree.expandItem(`/${projectName}`);
@@ -230,8 +239,7 @@ suite('Validation of debug functionality', async () => {
     });
 
     test('Open debug configuration file', async () => {
-        try{await topMenu.selectOption('Debug', 'Open Configurations');}
-        catch(e){
+        try {await topMenu.selectOption('Debug', 'Open Configurations'); } catch (e) {
          await topMenu.selectOption('Debug', 'Open Configurations');
         }
         await editor.waitEditorAvailable('launch.json');
