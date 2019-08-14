@@ -219,12 +219,13 @@ suite('Validation of debug functionality', async () => {
 
     test('Launch debug', async () => {
         await runTask('che: run-debug');
-
+        await ide.sleep(60000);
         await ide.waitNotificationAndConfirm('A new process is now listening on port 8080', 120000);
         await ide.waitNotificationAndOpenLink('Redirect is now enabled on port 8080', 120000);
     });
 
     test('Check content of the launched application', async () => {
+        await ide.sleep(60000);
         await previewWidget.waitContentAvailable(SpringAppLocators.springErrorMessageLocator, 60000, 10000);
     });
 
