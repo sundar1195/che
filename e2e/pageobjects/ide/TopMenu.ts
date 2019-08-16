@@ -36,7 +36,6 @@ export class TopMenu {
 
     public async clickOnTopMenuButton(buttonText: string, timeout: number = TestConstants.TS_SELENIUM_DEFAULT_TIMEOUT) {
         const buttonLocator: By = this.getTopMenuButtonLocator(buttonText);
-
         await this.ide.closeAllNotifications();
         await this.driverHelper.waitAndClick(buttonLocator, timeout);
     }

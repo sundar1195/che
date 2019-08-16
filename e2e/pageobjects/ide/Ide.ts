@@ -15,7 +15,7 @@ import { By, WebElement, error } from 'selenium-webdriver';
 import { TestWorkspaceUtil, WorkspaceStatus } from '../../utils/workspace/TestWorkspaceUtil';
 
 export enum RightToolbarButton {
-    Explorer = 'Explorer: projects',
+    Explorer = 'Explorer',
     Git = 'Git',
     Debug = 'Debug'
 }
@@ -235,12 +235,12 @@ export class Ide {
 
     private getSelectedRightToolbarButtonLocator(buttonTitle: string): By {
         return By.xpath(`//div[@id='theia-left-content-panel']//ul[@class='p-TabBar-content']` +
-            `//li[@title='${buttonTitle}' and contains(@id, 'shell-tab')] and contains(@class, 'p-mod-current')`);
+            `//li[@title[contains(.,'${buttonTitle}')] and contains(@id, 'shell-tab')] and contains(@class, 'p-mod-current')`);
     }
 
     private getRightToolbarButtonLocator(buttonTitle: String): By {
         return By.xpath(`//div[@id='theia-left-content-panel']//ul[@class='p-TabBar-content']` +
-            `//li[@title='${buttonTitle}' and contains(@id, 'shell-tab')]`);
+            `//li[@title[contains(.,'${buttonTitle}')] and contains(@id, 'shell-tab')]`);
     }
 
     private getNotificationXpathLocator(notificationText: string): string {
