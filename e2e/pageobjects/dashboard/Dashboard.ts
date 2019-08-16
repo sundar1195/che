@@ -51,7 +51,6 @@ export class Dashboard {
     async openDashboard() {
           await this.driverHelper.getDriver().navigate().to(TestConstants.TS_SELENIUM_BASE_URL);
           await this.waitPage();
-
     }
 
     async waitPage(timeout: number = TestConstants.TS_SELENIUM_LOAD_PAGE_TIMEOUT) {

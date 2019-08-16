@@ -12,16 +12,11 @@ import { CLASSES } from '../../inversify.types';
 import { DriverHelper } from '../../utils/DriverHelper';
 import { By } from 'selenium-webdriver';
 
-export enum OpenWorkspaceRootItems {
-    ProjectRoot = 'prjects',
-    DefaultRoot = '/'
-}
-
 @injectable()
 export class OpenWorkspaceWidget {
     private static readonly OPEN_WORKSPACE_MAIN_VIEW_XPATH = '//div[@class=\'dialogTitle\']/div[text()=\'Open Workspace\']';
     private static readonly OPEN_WORKSPACE_OPEN_BTN_CSS = 'div.dialogControl>button.main';
-
+    private static readonly THEIA_LOCATION_LIST_CSS = 'select.theia-LocationList';
 
     constructor(@inject(CLASSES.DriverHelper) private readonly driverHelper: DriverHelper) {
     }
@@ -34,19 +29,31 @@ export class OpenWorkspaceWidget {
         await this.driverHelper.waitDisappearance(By.xpath(OpenWorkspaceWidget.OPEN_WORKSPACE_MAIN_VIEW_XPATH));
     }
 
-    async selectItemInTree(rootEntry: string, itemURI: string) {
-        await this.driverHelper.waitAndClick(By.id(`/${rootEntry}/${itemURI}`));
+    async selectItemInTree(pathToItem: string) {
+        await this.driverHelper.waitAndClick(By.id(pathToItem));
     }
 
     async clickOnOpenButton() {
         await this.driverHelper.waitAndClick(By.css(OpenWorkspaceWidget.OPEN_WORKSPACE_OPEN_BTN_CSS));
     }
 
-    async selectItemInTreeAndOpenWorkspace(rootEntry: string, itemURI: string) {
-         this.selectItemInTree(rootEntry, itemURI);
-         this.clickOnOpenButton();
-         this.waitWidgetIsClosed();
+    async selectItemInTreeAndOpenWorkspace(item : string) {
+        await this.selectItemInTree(item);
+        await this.clickOnOpenButton();
+        await this.waitWidgetIsClosed();
     }
+
+   async expandTreeToPath(path: string) {
+   const pathNodes: string[] = path.split('/');
+   await pathNodes.forEach(element => {
+      this.driverHelper.waitAndClick(By.id(`/${element}`));
+    });
+}
+
+async selectRootWorkspaceItemInDropDawn(rootProject: string) {
+    await this.driverHelper.waitAndClick(By.css(OpenWorkspaceWidget.THEIA_LOCATION_LIST_CSS));
+    await this.driverHelper.waitAndClick(By.css(`option[value=\'file:///${rootProject}']`));
+ }
 
 
 }

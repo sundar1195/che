@@ -43,7 +43,7 @@ const projectName: string = 'petclinic';
 const namespace: string = TestConstants.TS_SELENIUM_USERNAME;
 const workspaceName: string = TestConstants.TS_SELENIUM_HAPPY_PATH_WORKSPACE_NAME;
 const workspaceUrl: string = `${TestConstants.TS_SELENIUM_BASE_URL}/dashboard/#/ide/${namespace}/${workspaceName}`;
-const pathToJavaFolder: string = `${projectName}/src/main/java/org/springframework/samples/petclinic`;
+const pathToJavaFolder: string = `src/main/java/org/springframework/samples/petclinic`;
 const pathToChangedJavaFileFolder: string = `${projectName}/src/main/java/org/springframework/samples/petclinic/system`;
 const classPathFilename: string = '.classpath';
 const javaFileName: string = 'PetClinicApplication.java';
@@ -69,22 +69,26 @@ suite('Validation of workspace start', async () => {
 
     test('Wait workspace running state', async () => {
         await ide.waitWorkspaceAndIde(namespace, workspaceName);
-        await ide.closeAllNotifications();
+        await projectTree.openProjectTreeContainer();
+        await projectTree.waitProjectImported(projectName, 'src');
+
     });
 
     test('Wait until project is imported', async () => {
+        const rootWsName: string = 'projects';
+        const mainWindowHandle: string = await driverHelper.getDriver().getWindowHandle();
         await topMenu.selectOption('File', 'Open Workspace...');
-        openWorkspaceWidget.selectItemInTreeAndOpenWorkspace('projects', 'console-java-simple');
-        await driverHelper.getDriver().getAllWindowHandles()
+        await openWorkspaceWidget.selectRootWorkspaceItemInDropDawn(rootWsName);
+        await openWorkspaceWidget.selectItemInTreeAndOpenWorkspace(`/${rootWsName}/${projectName}`);
+        await driverHelper.switchToSecondWindow(mainWindowHandle);
         await projectTree.openProjectTreeContainer();
-        await projectTree.waitProjectImported(projectName, 'src');
-        await projectTree.expandItem(`/${projectName}`);
+
     });
 });
 
 suite('Language server validation', async () => {
     test('Java LS initialization', async () => {
-        await projectTree.expandPathAndOpenFile(pathToJavaFolder, javaFileName);
+        await projectTree.expandPathAndOpenFileInAssociatedWorkspace(projectName, pathToJavaFolder, javaFileName);
         await editor.selectTab(javaFileName);
         await ide.checkLsInitializationStart('Starting Java Language Server');
         await ide.waitStatusBarTextAbsence('Starting Java Language Server', 360000);
